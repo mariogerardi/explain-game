@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EXPLAIN - Daily AI Word Game</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jockey+One&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="game-header">
+        <h1 class="title">E X P L <span class="ai-title">A I</span> N</h1>
+        <p class="tagline">Team up with AI to connect the dots.</p>
+        <div id="best-attempt" class="best-attempt"></div>
+        <div id="streak-display" class="streak-display hidden"></div>
+    </div>
+    <div class="row">
+        <div class="left-sidebar">
+            <h2 class="menu-title">Menu</h2>
+            <label for="menu-toggle" class="menu-label">☰</label>
+            <input type="checkbox" id="menu-toggle">
+            <div class="sidebar-buttons">
+                <button id="home-button" class="nav-button">Home</button>
+                <button id="how-to-play-button" class="nav-button">How to Play</button>
+                <button id="archive-button" class="nav-button">Archive</button>
+                <button id="shuffle-mode" class="nav-button">Shuffle Mode</button>
+                <button id="custom-mode" class="nav-button">Custom Mode</button>
+                <button id="achievements-button" class="nav-button">Achievements</button>
+                <button id="themes-button" class="nav-button">Themes</button>
+                <button id="settings-button" class="nav-button">Settings</button>
+            </div>
+        </div>    
+        <div class="game-container" id="game-container">    
+            <div class="game-card" id="game-card">
+                <div class="game-card-inner" id="game-card-inner">
+                    <div class="game-card-front">
+                        <div class="popout">
+                            <p id="challenge-label">Try to get AI to guess:</p>
+                            <p id="daily-word">Loading...</p>
+                        </div>
+                    </div>
+                    <div class="game-card-back game-result">         
+                        <div id="result-message"></div>     
+                        <button id="share-button" class="hidden nav-button">Share Result</button>
+                    </div>
+                </div>
+            </div>    
+            <div class="clue-section">
+                <div class="avatar">
+                    <img src="emotions/happy.png" alt="Avatar" class="avatar-image">
+                </div>            
+                <div class="clue-log" id="clue-log">
+                    <div class="chat-entry ai" id="ai">
+                        <p class="prompt"></p>
+                    </div>
+                </div>
+            </div>      
+            <div class="past-clues" id="past-clues">
+                <h4 class="clue-log-title">Clue Log:</h4>
+                <div id="user-clue-log" class="clue-log"></div>
+            </div>                      
+            <div class="game-content">
+                <div class="input-section">
+                    <div class="box">
+                        <input type="text" id="clue-input" maxlength="25" placeholder="Enter your clue..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                        <button id="submit-clue">Submit</button>
+                    </div>
+                </div>
+            </div>
+            <div class="game-metrics" id="metrics-container">
+                <div class="metric">
+                    <p class="metric-label">Characters Used</p>
+                    <div class="remaining-characters-gauge">
+                        <svg class="character-circle" viewBox="0 0 100 100">
+                            <circle class="character-bg" cx="50" cy="50" r="40"></circle>
+                            <circle class="character-fill" cx="50" cy="50" r="40"></circle>
+                        </svg>
+                        <div class="character-text">0/25</div>
+                    </div>
+                </div>         
+                <div class="metric">
+                    <p class="metric-label">AI Confidence</p>
+                    <div class="confidence-gauge">
+                        <svg class="confidence-circle" viewBox="0 0 100 100">
+                            <circle class="confidence-bg" cx="50" cy="50" r="40"></circle>
+                            <circle class="confidence-fill" cx="50" cy="50" r="40"></circle>
+                        </svg>
+                        <div class="confidence-text">0%</div>
+                    </div>
+                </div>
+                <div class="metric">
+                    <p class="metric-label">Search Space</p>
+                    <div class="search-space-gauge">
+                        <svg class="search-space-circle" viewBox="0 0 100 100">
+                            <circle class="search-space-bg" cx="50" cy="50" r="40"></circle>
+                            <circle class="search-space-fill" cx="50" cy="50" r="40"></circle>
+                        </svg>
+                        <div class="search-space-text">100</div>
+                    </div>
+                </div>                        
+                <div class="metric" id="attempts-mode">
+                    <p class="metric-label">Attempts Left</p>
+                    <div class="attempts-gauge">
+                        <svg class="attempts-circle" viewBox="0 0 100 100">
+                            <circle class="attempts-bg" cx="50" cy="50" r="40"></circle>
+                            <circle class="attempts-fill" cx="50" cy="50" r="40"></circle>
+                        </svg>
+                        <div class="attempts-text">5</div>
+                    </div>
+                </div>
+            </div>           
+        </div>
+        <div class="right-sidebar" id="leaderboard-container">
+            <h2 class="leaderboard-title">Daily Leaderboard</h2>
+            <div id="leaderboard-section">
+                <div class="leaderboard-container">
+                    <div id="leaderboard">
+                        <p>Loading...</p>
+                    </div>
+                </div>
+            </div>      
+        </div>
+    </div>
+    <div id="how-to-play" class="hidden">
+        <div class="how-to-play">
+            <h2>How to Play</h2>
+            <p>
+                Welcome to <strong>EXPLAIN</strong>, where your goal is to help an AI guess the <strong>Challenge Word</strong>.  
+                The challenge — you need to do it as <strong>efficiently as possible</strong>.  
+                The fewer characters you use, the better your score.
+            <br><br>
+                There are <strong>four</strong> game modes, each offering a different way to play:
+            <br><br>
+                <strong class="specialwords">Daily Challenge</strong>: A new word every day. You get only <strong>5 attempts</strong>, so make every clue count!
+                <br><br>
+                <strong class="specialwords">Shuffle Mode</strong>: Play random puzzles with unlimited attempts! Experiment and refine your strategy without restriction.
+                <br><br>
+                <strong class="specialwords">Custom Mode</strong>: Challenge the AI to guess a word of your choosing, with unlimited attempts!
+                <br><br>
+                <strong class="specialwords">Archive Mode</strong>: Set high scores on all previous daily puzzles, dating back to February 1, 2025!
+            </p>        
+            <h3 class="specialwords">How It Works:</h3>
+            <p>
+                In every game, the AI has a <strong>Challenge Word</strong> it needs to guess, with the help of your clues. 
+                These can be single words, short phrases, or whatever you'd like that nudges the AI in the right direction.  
+                The AI relies on associations, logical connections, etc. — so think carefully before submitting your clue.
+                <br><br>
+                <strong>All clues must be 25 characters or fewer</strong>, but the best clues are short, meaningful, and specific.
+                Precise clues help the AI eliminate wrong guesses quickly, while shorter clues increase your chance of getting a better score.
+            </p>
+        
+            <h3 class="specialwords">Metrics</h3>
+            <p>
+                As you play, you’ll see four key indicators of your progress:
+                <br><br>
+                <span class="specialwords metric-subheading">Confidence Score</span>
+                <br><br>
+                After each guess, the AI provides a Confidence Score (0% – 100%), indicating how sure it is about its answer.  
+                High confidence suggests the AI thinks it is close with its guess, while low confidence indicates it's taking a shot in the dark.
+                A high confidence level doesn’t always mean the AI is close, but it does mean your clue is leading it in a strong direction.
+                <br><br>
+                <span class="specialwords metric-subheading">Search Space</span>
+                <br><br>
+                Search Space represents the number of possible words the AI is considering based on your clue.  
+                A broad clue results in a large search space (many possible words), while a well-targeted clue shrinks the search space to just a few possibilities.
+                Ideally, you want to reduce the Search Space while keeping the AI confident in its guess. This becomes increasingly difficult with fewer characters!
+                <br><br>
+                <span class="specialwords metric-subheading">Character Usage & Attempts</span>
+                <br><br>
+                In Daily Challenge mode, you have 5 attempts to get the AI to guess the correct word, and your <strong class="specialwords">first</strong> successful Clue is locked in as your answer.
+                The best players are able to get the AI to guess the answer in very few characters. If you use short, precise clues, you’ll achieve a better score and rank higher on the leaderboard!
+            </p>
+            <h3 class="specialwords">Winning & Losing</h3>
+            <p>
+                If you run out of attempts on the Daily Challenge, that's okay - you can try again tomorrow! 
+                If the AI correctly guesses the word on one of your five attempts, you win!
+                <br><br> 
+                <strong class="specialwords">All Other Game Modes</strong>: No limit on attempts! Keep playing and refining your strategy.
+                <br><br>
+                Each day is a new challenge! Think strategically, give your best clues, and leave the rest to the AI.
+            </p>
+            <div></div>
+            <button class="nav-button" id="back-to-game">Back to Game</button>
+        </div>           
+    </div>
+    <div id="archive-menu" class="hidden">
+        <h2 id="archive-months-header">Select a Month</h2>
+        <div id="month-list" class="archive-months"></div>
+        <div class="buttonbox archive">
+            <button class="nav-button" id="back-to-game-archive">Back</button>
+        </div>
+    </div>
+    <div id="archive-day-menu" class="hidden">
+        <h2 id="selected-month-title"></h2>
+        <div id="day-list" class="archive-days"></div>
+        <div class="buttonbox archive">
+            <button class="nav-button" id="back-to-archive-menu">Back</button>
+        </div>
+    </div>    
+    <div id="custom-game-section" class="hidden">
+        <h2>Create Your Own Puzzle</h2>
+        <input type="text" id="custom-word" placeholder="Enter your puzzle word (do not enter plural words)." maxlength="15" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        <input type="text" id="custom-funfact" placeholder="(OPTIONAL) Enter a fun fact or completion message." maxlength="100" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        <div class="buttonbox">
+            <button class="nav-button" id="back-to-modes">Back</button>
+            <button class="nav-button" id="start-custom-game">Start Game</button>
+        </div>
+    </div>    
+    <div id="settings-menu" class="hidden">
+        <div class="settings-container">
+            <h2>Settings</h2>
+            <div class="settings-item">
+                <label for="username-input" class="settings-label">Username:</label>
+                <input type="text" id="username-input" maxlength="10" placeholder="Enter your username">
+                <button class="settings-button" id="save-settings">Save</button>
+            </div> 
+            <div class="settings-item">
+                <button class="settings-button" id="back-to-game-settings">Back to Game</button>
+            </div>
+        </div>
+    </div>    
+    <div id="themes-menu" class="hidden">
+        <div class="themes-container">
+            <h2>Choose a Theme</h2>
+            <div class="themes-grid">
+                <div class="theme-box">
+                    <button class="theme-button button-galaxy" data-theme="galaxy">Galaxy</button>
+                    <p class="theme-desc">The default theme. Guide the AI as you barrel through space!</p>
+                </div>
+                <div class="theme-box">
+                    <button class="theme-button button-dreamer" data-theme="dreamer">Dreamer</button>
+                    <p class="theme-desc">Earn the <strong>"Deep Thinker"</strong> achievement to unlock this theme.</p>
+                </div>
+                <div class="theme-box">
+                    <button class="theme-button button-cupcake" data-theme="cupcake">Cupcake</button>
+                    <p class="theme-desc">Earn the <strong>"Baker’s Dozen"</strong> achievement to unlock this theme.</p>
+                </div>
+                <div class="theme-box">
+                    <button class="theme-button button-verdant" data-theme="verdant">Verdant</button>
+                    <p class="theme-desc">Earn the <strong>"Trailblazer"</strong> achievement to unlock this theme.</p>
+                </div>
+                <div class="theme-box">
+                    <button class="theme-button button-notepad" data-theme="notepad">Notepad</button>
+                    <p class="theme-desc">Earn the <strong>"Blank Page"</strong> achievement to unlock this theme.</p>
+                </div>
+                <div class="theme-box">
+                    <button class="theme-button button-terminal" data-theme="terminal">Terminal</button>
+                    <p class="theme-desc">Earn the <strong>"C:\"</strong> achievement to unlock this theme.</p>
+                </div>
+                <div class="theme-box">
+                    <button class="theme-button button-fishbowl" data-theme="fishbowl">Fishbowl</button>
+                    <p class="theme-desc">Earn the <strong>"Crystal Clear"</strong> achievement to unlock this theme.</p>
+                </div>
+                <div class="theme-box">
+                    <button class="theme-button button-blizzard" data-theme="blizzard">Blizzard</button>
+                    <p class="theme-desc">Earn the <strong>"Thin Ice"</strong> achievement to unlock this theme.</p>
+                </div>
+                <div class="theme-box">
+                    <button class="theme-button button-volcano" data-theme="volcano">Volcano</button>
+                    <p class="theme-desc">Earn the <strong>"Smoldering Precision"</strong> achievement to unlock this theme.</p>
+                </div>
+                <div class="theme-box">
+                    <button class="theme-button button-sandbox" data-theme="sandbox">Sandbox</button>
+                    <p class="theme-desc">Earn the <strong>"Free Play"</strong> achievement to unlock this theme.</p>
+                </div>
+                <div class="theme-box">
+                    <button class="theme-button button-billiards" data-theme="billiards">Billiards</button>
+                    <p class="theme-desc">Earn the <strong>"Corner Pocket"</strong> achievement to unlock this theme.</p>
+                </div>
+                <div class="theme-box">
+                    <button class="theme-button button-neowave" data-theme="neowave">Neowave</button>
+                    <p class="theme-desc">Earn the <strong>"Last Call"</strong> achievement to unlock this theme.</p>
+                </div>
+                <div class="theme-box">
+                    <button class="theme-button button-eclipse" data-theme="eclipse">Eclipse</button>
+                    <p class="theme-desc">Earn the <strong>"Totality"</strong> achievement to unlock this theme.</p>
+                </div>
+                <div class="theme-box">
+                    <button class="theme-button button-archivist" data-theme="library">Library</button>
+                    <p class="theme-desc">Earn the <strong>"Archivist"</strong> achievement to unlock this theme.</p>
+                </div>
+                <div class="theme-box">
+                    <button class="theme-button button-luxury" data-theme="luxury">Luxury</button>
+                    <p class="theme-desc">Earn the <strong>"Hundredfold Prestige"</strong> achievement to unlock this theme.</p>
+                </div>
+            </div>
+            <div class="buttonbox">
+                <button class="nav-button" id="back-to-game-themes">Back to Game</button>
+            </div>       
+        </div>
+    </div>     
+    <div id="achievements-menu" class="hidden">
+        <div class="achievements-container">
+            <h2>Achievements</h2>
+            <div class="achievements-grid">
+            </div>
+            <button class="nav-button" id="back-to-game-achievements">Back to Game</button>
+        </div>
+    </div>      
+    <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,2838 @@
+/* 
+================================================================================
+    GENERAL CSS
+    (Everything you'd probably expect to be here):
+
+    1) GENERAL & BASE STYLES
+    2) MAIN LAYOUT & HEADERS
+    3) SIDEBARS & NAVIGATION
+    4) GAME CONTAINER & CARD 
+    5) GAME CONTENT & CLUES
+    6) INPUT & SUBMISSION
+    7) GAME METRICS & GAUGES
+    8) HOW-TO-PLAY, SETTINGS, ARCHIVE, ETC.
+================================================================================
+*/
+
+/* -------------------- 1) GENERAL & BASE STYLES -------------------- */
+
+body {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Trebuchet MS', Arial, sans-serif;
+    background: var(--bg-color);
+    color: var(--text-color);
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin: 0;
+}
+
+h2:not(.unlocked *), 
+h4:not(.unlocked *) {
+    animation: var(--specialwords-animation);
+}
+
+.specialwords {
+    font-weight: bold;
+    animation: var(--specialwords-animation);
+}
+
+.hidden {
+    display: none !important;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.animation-visible {
+    animation: fadeInSlide 0.6s ease-out forwards;
+}
+
+.animation-hidden {
+    animation: fadeOutSlide 0.4s ease-out forwards;
+}
+
+#particle-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.loading-bubble {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    max-width: 70%;
+    padding: 8px 12px;
+    margin-right: auto;
+    font-size: 1rem;
+    color: #ffffff;
+    background: var(--bbbg) !important;
+    border-radius: 15px;
+    text-align: left;
+    position: relative;
+}
+
+.loading-dots::after {
+    content: " ";
+    display: inline-block;
+    animation: dots 1.5s infinite steps(4, end);
+}
+
+/* -------------------- 2) MAIN LAYOUT & HEADERS -------------------- */
+
+.game-header {
+    margin-bottom: 25px;
+    z-index: -1;
+}
+
+.title {
+    font-family: "Jockey One", sans-serif;
+    font-size: 4rem;
+    font-style: normal;
+    letter-spacing: 0;
+    text-align: center;
+    color: var(--title-color);
+    margin: 0;
+}
+
+.ai-title {
+    display: inline-block;
+    font-weight: bold;
+    animation: var(--specialwords-animation);
+}
+
+.tagline {
+    font-size: 1rem;
+    font-weight: bolder;
+    color: var(--text-color);
+    text-align: center;
+    margin: 0 0 5px;
+    opacity: 0.9;
+}
+
+.best-attempt {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    color: var(--text-color);
+    border-radius: 5px;
+    opacity: 0.9;
+    white-space: nowrap;
+}
+
+.streak-display {
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--text-color);
+    text-align: center;
+    margin-top: 5px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+/* -------------------- 3) SIDEBARS & NAVIGATION -------------------- */
+
+.left-sidebar,
+.right-sidebar {
+    width: 300px;
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+    margin-top: 20px;
+}
+
+.left-sidebar {
+    text-align: right;
+    padding-right: 10px;
+}
+
+.right-sidebar {
+    height: 70%;
+    text-align: left;
+}
+
+.sidebar-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.menu-label, #menu-toggle {
+    display: none;
+}
+
+.menu-title,
+.leaderboard-title {
+    margin-top: 0;
+    font-size: 1.2rem;
+    color: whitesmoke;
+    text-transform: uppercase;
+}
+
+.menu-title {
+    align-self: flex-end;
+}
+
+.nav {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    padding: 10px;
+    margin-bottom: 5px;
+}
+
+.nav-button {
+    width: 50%;
+    padding: 12px;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: left;
+    color: white;
+    background: var(--button-bg);
+    border-radius: 6px;
+    cursor: pointer;
+    border: .5px solid var(--border-color);
+    box-shadow: 0px 3px 8px var(--shadow-color);
+    transition: all 0.3s ease-in-out;
+}
+
+.nav-button:hover {
+    background: var(--button-hover-bg);
+    transform: scale(1.05);
+}
+
+.nav-button:active {
+    transform: scale(0.95);
+}
+
+#leaderboard-section {
+    width: 100%;
+}
+
+.leaderboard-container {
+    width: 100%;
+}
+
+#leaderboard {
+    display: flex;
+    flex-direction: column;
+}
+
+.leaderboard-entry {
+    display: flex;
+    align-items: flex-end; 
+    height: 20px;
+    padding: 4px 5px 7.5px;
+    font-size: 0.95rem;
+    text-align: left;
+    background-color: var(--leaderboard-bg);
+    color: var(--leaderboard-text);
+    transition: background 0.3s;
+    border: .5px solid var(--accent-1);
+}
+
+.leaderboard-entry span {
+    margin-bottom: 2px;
+    align-self: baseline;
+    margin-top: 4px;
+}
+
+.leaderboard-entry:first-child {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.leaderboard-entry.top-scorer {
+    background-color: var(--aiResponse);
+}
+
+.leaderboard-entry:hover {
+    background-color: var(--aiResponse);
+}
+
+.rank {
+    font-weight: 1rem;
+    font-weight: bold;
+    color: var(--rank);
+}
+
+.name {
+    font-size: .85rem;
+    padding-left: 7.5px;
+}
+
+.score {
+    font-size: 0.75rem;
+    color: var(--score);
+    padding-left: 7.5px;
+}
+
+.clue {
+    font-size: .75rem;
+    margin-left: auto;
+    text-align: right;
+}
+
+.you {
+    font-weight: bold;
+    font-style: italic;
+}
+
+.top-scorer .name {
+    font-size: 1rem;
+}
+
+/* -------------------- 4) GAME CONTAINER & CARD -------------------- */
+
+.game-container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    width: 25rem;
+    padding: 0 35px 0 30px;
+    text-align: center;
+    color: var(--text-color);
+    overflow: visible;
+}
+
+.game-card {
+    position: relative;
+    width: 100%;
+    height: 150px;
+    margin-bottom: 25px;
+    perspective: 1000px;
+}
+
+.game-card-inner {
+    width: 100%;
+    height: 100px;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+}
+
+.game-card.flipped .game-card-inner {
+    transform: rotateY(180deg);
+}
+
+.game-card-front,
+.game-card-back {
+    position: absolute;
+    width: 100%;
+    border-radius: 10px;
+    backface-visibility: hidden;
+}
+
+.game-card-back {
+    display: flex;
+    flex-direction: column;
+    transform: rotateY(180deg);
+}
+
+.game-result {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 1.2rem;
+    color: var(--text-color);
+}
+
+#result-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 16.5px;
+    width: 95%;
+}
+
+#share-button {
+    background: var(--alt-bg);
+    width: fit-content;
+    color: var(--text-color);
+    font-size: 0.8rem;
+    font-weight: bold;
+    padding: 8px;
+    margin: 10px auto 12.5px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0px 3px 8px rgba(255, 255, 255, 0.2);
+    animation: var(--special-bg);
+    transition: all 0.3s ease-in-out;
+}
+
+#share-button:hover {
+    transform: scale(1.05);
+}
+
+#share-button:active {
+    transform: scale(0.95);
+}
+
+.popout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#challenge-label {
+    margin: 0;
+    padding: 5px;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+#daily-word {
+    margin: 0;
+    padding: 5px;
+    font-size: 2.25rem;
+    font-style: italic;
+}
+
+/* -------------------- 5) GAME CONTENT & CLUES -------------------- */
+
+.game-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.clue-section {
+    display: flex;
+    flex-direction: row;
+    min-height: 150px;
+}
+
+.avatar {
+    width: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.avatar img {
+    width: 100%;
+    max-width: 110px;
+    height: auto;
+    margin-top: 30px;
+    image-rendering: auto;
+    backface-visibility: hidden;
+    transition: filter 0.3s ease-in-out;
+}
+
+.past-clues {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.clue-log-title {
+    margin: 5px 0;
+    text-align: left;
+    animation: none;
+    color: var(--text-color);
+}
+
+.clue-log {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.clue-log-message {
+    margin: 0;
+    font-size: 0.9rem;
+    font-style: italic;
+    color: var(--text-color);
+}
+
+#user-clue-log {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 100%;
+    max-height: 150px;
+    gap: 5px;
+}
+
+#user-clue-log .chat-entry {
+    font-size: 0.8rem;
+    color: var(--clue-color);
+    background-color: var(--clue-bg);
+    padding: 5px 8px;
+    border: 1px solid var(--accent-1);
+    border-radius: 5px;
+    margin: 5px 2.5px auto 0;
+}
+
+.chat-entry {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    margin: 5px 10px;
+    max-width: 80%;
+    font-size: 1rem;
+    line-height: 1.1;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    border-radius: 15px;
+}
+
+.chat-entry.ai {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-right: auto;
+    background: var(--aiResponse);
+    color: #FFFFFF;
+    text-align: left;
+    border-bottom-left-radius: 0;
+}
+
+.chat-entry.ai:first-child {
+    visibility: hidden;
+    opacity: 0;
+    animation: fadeIn 1.2s ease-in-out;
+}
+
+.prompt {
+    margin: auto;
+}
+
+.winning-message {
+    padding: 10px;
+    border-radius: 15px;
+    color: var(--winningTextColor) !important;
+    background: var(--winningBubble) !important;
+    background-size: 200% 200%;
+    animation: fadeIn 0.3s ease-in-out !important;
+}
+
+/* -------------------- 6) INPUT & SUBMISSION -------------------- */
+
+.input-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+#clue-input {
+    flex: 1;
+    padding: 10px;
+    margin-right: 5px;
+    font-size: 1rem;
+    color: var(--text-color);
+    background-color: var(--alt-bg);
+    border: 1px solid var(--accent-1);
+    border-radius: 5px;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+#clue-input::placeholder {
+    color: var(--text-color);
+    opacity: .6;
+}
+
+#clue-input:focus {
+    outline: none;
+    box-shadow: 0 0 6px var(--accent-2);
+}
+
+#submit-clue {
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--text-color);
+    background-color: var(--alt-bg);
+    border: 1px solid var(--accent-1);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    animation: none !important;
+}
+
+#submit-clue:not(:disabled) {
+    box-shadow: 0 0 6px var(--accent-2);
+}
+
+#submit-clue:hover {
+    background-color: var(--alt-bg);
+    border-color: var(--rank);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.25);
+}
+
+#submit-clue:disabled {
+    background: var(--disabled-button);
+    border-color: rgb(136, 136, 136);
+    cursor: not-allowed;
+}
+
+/* -------------------- 7) GAME METRICS & GAUGES -------------------- */
+
+.game-metrics {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 5px;
+}
+
+.metric {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.metric-label {
+    margin: 5px 0;
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: var(--text-color);
+    text-align: center;
+}
+
+.attempts-gauge,
+.confidence-gauge,
+.remaining-characters-gauge,
+.search-space-gauge {
+    width: 90px;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.attempts-circle,
+.character-circle,
+.confidence-circle,
+.search-space-circle {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.attempts-bg,
+.character-bg,
+.confidence-bg,
+.search-space-bg {
+    fill: none;
+    stroke: var(--ring-bg);
+    stroke-width: 8;
+    stroke-linecap: round;
+}
+
+.character-fill,
+.attempts-fill,
+.search-space-fill,
+.confidence-fill {
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke: var(--ring-color);
+    fill: none;
+    stroke-dasharray: 251.2;
+    stroke-dashoffset: 251.2;
+    transition: stroke-dashoffset 0.75s ease-in-out, stroke 0.75s ease-in-out;
+}
+
+.character-fill {
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 0.2s ease-in-out, stroke 0.2s ease-in-out;
+}
+
+.attempts-fill {
+    transition: stroke-dashoffset 0.5s ease-in-out, stroke 0.5s ease-in-out;
+}
+
+.attempts-text,
+.character-text,
+.search-space-text,
+.confidence-text {
+    position: absolute;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--text-color);
+    text-align: center;
+}
+
+.character-text {
+    font-size: 1.25rem;
+}
+
+/* -------------------- 8) HOW-TO-PLAY, SETTINGS, ARCHIVE, ETC. -------------------- */
+
+#how-to-play {
+    padding: 30px;
+    color: var(--text-color);
+    text-align: left;
+    overflow-y: scroll;
+}
+
+#how-to-play p {
+    font-size: 1rem;
+}
+
+.how-to-play {
+    display: grid;
+    grid-template-columns: 1fr 6fr;
+    gap: 10px;
+    margin: 0 auto;
+    padding: 25px;
+    color: var(--text-color);
+    text-align: left;
+}
+
+.how-to-play > *:nth-child(odd) {
+    text-align: right;
+    padding: 15px;
+    margin: 0;
+}
+
+.how-to-play > *:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.05);
+    margin: 0;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+#back-to-game {
+    width: 175px;
+    background: none;
+    text-align: center;
+    background: var(--button-bg);
+    margin: 20px 0 0 auto;
+}
+
+#archive-menu, #archive-day-menu, #custom-game-section, #settings-menu {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.archive-months, .archive-days {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+    justify-content: center !important;
+    margin-top: 15px !important;
+    max-width: 1000px;
+}
+
+#archive-months-header, #selected-month-title {
+    text-align: center;
+}
+
+.archive-months button, .archive-days button {
+    width: 180px !important;
+    padding: 10px !important;
+    font-size: 1rem !important;
+    text-align: center !important;
+}
+
+.archive-days button {
+    line-height: .9rem !important;
+    text-align: left !important;
+    width: 130px !important;
+}
+
+#back-to-archive-menu {
+    margin-bottom: 50px;
+    text-align: center;
+    width: 100px;
+}
+
+#back-to-game-archive {
+    margin-top: 50px;
+    text-align: center;
+    width: 100px;
+}
+
+#custom-game-section {
+    max-width: 600px;
+    color: var(--text-color);
+    text-align: center;
+    gap: 10px;
+    border-radius: 15px;
+}
+
+#custom-word,
+#custom-funfact {
+    width: 450px;
+    padding: 10px;
+    font-size: 0.8rem;
+    color: var(--text-color);
+    background-color: var(--input-bg);
+    border: var(--input-border);
+    border-radius: 5px;
+    outline: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#custom-word:focus,
+#custom-funfact:focus {
+    border-color: var(--accent-1);
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.7);
+}
+
+#custom-word::placeholder,
+#custom-funfact::placeholder {
+    color: var(--text-color);
+    opacity: .8;
+}
+
+.buttonbox {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.archive {
+    justify-content: space-around;
+    margin-top: 25px;
+}
+
+#back-to-modes,
+#start-custom-game {
+    width: 48%;
+    padding: 10px;
+}
+
+.settings-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.settings-label {
+    font-weight: bold;
+    text-align: left;
+    padding-right: 10px;
+}
+
+.settings-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.settings-item input {
+    width: 175px;
+    padding: 8px;
+    border: 1px solid var(--accent-1);
+    color: var(--text-color);
+    font-size: 1.1rem;
+    border-radius: 3px;
+    background-color: var(--input-bg);
+    margin: 10px auto;
+    box-shadow: none !important;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.settings-button {
+    width: 100px;
+    padding: 10px 15px;
+    margin-left: 8px;
+    font-weight: bold;
+    text-transform: uppercase;
+    background: var(--button-bg);
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease-in-out;
+}
+
+.settings-button:hover {
+    background: var(--button-hover-bg);
+    transform: scale(1.05);
+}
+
+#settings-menu {
+    width: 425px;
+    color: var(--text-color);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 15px;
+}
+
+#settings-menu,
+#settings-menu input,
+#settings-menu select,
+#settings-menu textarea,
+#settings-menu button {
+    color: var(--text-color);
+}
+
+#settings-menu input::placeholder,
+#settings-menu textarea::placeholder {
+    color: var(--text-color);
+    opacity: 0.7;
+}
+
+#username-input:focus {
+    border-color: var(--input-border);
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.7);
+}
+
+#achievements-menu {
+    max-width: 1000px;
+    padding: 30px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 15px;
+}
+
+.achievements-container {
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    justify-content: center;
+}
+
+.achievement {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    padding: 10px;
+    background: #222;
+    border-radius: 10px;
+    border: var(--input-border);
+    width: 300px;
+    height: 125px;
+    text-align: center;
+    color: #bbb;
+    font-size: 0.9rem;
+    transition: transform 0.3s ease-in-out;
+    position: relative;
+}
+
+.achievement.unlocked {
+    color: white !important;
+    font-weight: bold;    
+}
+
+.achievement.locked {
+    color: #999999;
+    background: #333;
+    opacity: 0.8;
+}
+
+.achievement.locked::after {
+    content: "\01F512";
+    font-size: 1.5rem;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.achievement.unlocked:hover {
+    transform: scale(1.05);
+}
+
+.achievement-progress-bar {
+    width: 85%;
+    height: 10px;
+    background-color: #ddd;
+    border-radius: 5px;
+    margin-top: 5px;
+    overflow: hidden;
+}
+
+.achievement small {
+    width: 85%;
+    margin-bottom: 10px;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: #4caf50;
+    transition: width 0.3s ease-in-out;
+}
+
+.progress-text {
+    width: 85%;
+    font-size: 12px;
+    margin-top: 5px;
+    color: #666;
+}
+
+.achievement.unlocked-dreamer {
+    background: linear-gradient(135deg, #6aabec, #ea72f0);
+    text-shadow: 0px 0px 10px #333, 0px 0px 5px #333;
+}
+  
+.achievement.unlocked-cupcake {
+    background: linear-gradient(180deg, #ffa6ca, #ff5b81);
+    text-shadow: 0px 0px 10px #333, 0px 0px 5px #333;
+}
+  
+.achievement.unlocked-verdant {
+    background: radial-gradient(#4CAF50, #17671b);
+    text-shadow: 0px 0px 10px #333, 0px 0px 5px #333;
+}
+  
+.achievement.unlocked-sandbox {
+    color: white;
+    background: linear-gradient(180deg, 
+        #0077b6 0%,  
+        #00b4d8 25%,  
+        #00b4d8 40%,  
+        #caf0f8 50%,  
+        #f8e16c 58%, 
+        #e2a565 70%, 
+        #e2a565 100% 
+    );
+    text-shadow: 0px 0px 10px #333, 0px 0px 5px #333;
+}
+
+.achievement.unlocked-terminal {
+    color: black;
+    background: linear-gradient(135deg, #003300, #005500, #00aa00, #44ff00, #008800);
+    filter: contrast(1.2) brightness(0.9) saturate(1.1);
+    text-shadow: 0px 0px 10px #333, 0px 0px 5px #333;
+}
+  
+.achievement.unlocked-fishbowl {
+    background: radial-gradient(circle at top, rgba(255,255,255,0.2) 0%, transparent 70%),
+    linear-gradient(135deg, #5fc3e4, #3ca1c9, #006478, #00445e, #002b40, #001a27);
+    text-shadow: 0px 0px 10px #333, 0px 0px 5px #333;
+}
+  
+.achievement.unlocked-blizzard {
+    background: radial-gradient(circle at top, #79e2ff 0%, rgba(255, 255, 255, 0.5) 30%, transparent 70%),
+    linear-gradient(135deg, #888 0%, #aacbe6 40%, #79e2ff 80%);
+    text-shadow: 0px 0px 10px #333, 0px 0px 5px #333;
+}
+
+.achievement.unlocked-notepad {
+    color: black !important;
+    background: 
+        linear-gradient(to bottom, 
+            transparent 10%, 
+            #a1caff 12%,  
+            transparent 14% 
+        ) repeat-y,
+        linear-gradient(to right, 
+            transparent 6%, 
+            #ff6666 7%,  
+            transparent 8% 
+        ),#fdfdfb; 
+    background-size: 100% 32px, 100% 100%;
+}
+  
+.achievement.unlocked-volcano {
+    background: 
+        radial-gradient(circle, rgba(255, 69, 0, 0.6) 10%, transparent 60%) center,
+        radial-gradient(circle, rgba(178, 34, 34, 0.8) 10%, transparent 70%) 30% 40%,
+        linear-gradient(135deg, #2a2a2a 20%, #3d3d3d 40%, #1a1a1a 60%, #0d0d0d 80%),
+        linear-gradient(135deg, #ff4500 0%, #b22222 100%);
+    background-blend-mode: overlay, overlay, normal, normal;
+}
+  
+.achievement.unlocked-neowave {
+    background: linear-gradient(0deg, #f0f, #0ff);
+    text-shadow: 0px 0px 10px #333, 0px 0px 5px #333;
+}
+  
+.achievement.unlocked-eclipse {
+    background: radial-gradient(circle, 
+        #000 0%,     
+        #222 70%,    
+        #333 75%,    
+        gold 76%,    
+        #ffcc33 78%, 
+        rgba(255, 204, 51, 1) 80%, 
+        rgba(0, 0, 0, 1) 100% 
+    );
+}
+
+.achievement.unlocked-billiards {
+    background: radial-gradient(circle, 
+        #222 0%,     
+        #111 40%,    
+        #000 60%,    
+        #1B4D11 85%, 
+        #0B3D02 100% 
+    );
+}
+
+.achievement.unlocked-library {
+    background: radial-gradient(circle, 
+        #C2A66C 0%, 
+        #B08B53 30%,
+        #8C6239 50%,
+        #5C3E1B 70%,
+        #2F1B0F 85%,
+        #0A0A0A 100%
+    );
+}
+  
+.achievement.unlocked-luxury {
+    background: linear-gradient(135deg, 
+        #b8860b 0%,   
+        #ffcc33 20%,   
+        #ffd700 40%,  
+        #fff4b1 55%,  
+        #ffd700 70%,  
+        #b8860b 100%  
+    );
+    background-size: 300% 300%;
+    color: #1E1E1E; 
+    text-shadow: 
+        0px 0px 5px rgba(255, 215, 0, 0.6), 
+        0px 0px 10px rgba(255, 215, 0, 0.8), 
+        2px 2px 3px rgba(139, 69, 19, 0.8); 
+    font-weight: bold;
+}
+
+#back-to-game-achievements {
+    margin-top: 50px;
+    width: 150px;
+    text-align: center;
+}
+
+#themes-menu {
+    max-width: 750px;
+    padding: 30px;
+    color: var(--text-color);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    border-radius: 15px;
+}
+
+.themes-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.themes-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    justify-content: center;
+    width: 100%;
+}
+
+.theme-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 5px;
+    border-radius: 10px;
+    width: 175px;
+}
+
+.theme-button {
+    width: 125px;
+    padding: 10px;
+    font-size: .9rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white;
+    background: var(--button-bg);
+    border-radius: 6px;
+    cursor: pointer;
+    border: 1px solid var(--border-color);
+    box-shadow: 0px 3px 6px var(--shadow-color);
+    transition: all 0.3s ease-in-out;
+}
+
+.theme-button:hover {
+    background: var(--button-hover-bg);
+    transform: scale(1.05);
+}
+
+.theme-button:active {
+    transform: scale(0.95);
+}
+
+.theme-button.selected-theme {
+    box-shadow: 0px 0px 12px rgba(255, 255, 255, 0.8);
+    border: 2px solid white;
+    transform: scale(1.05);
+}
+
+.theme-button:disabled {
+    background: #444;
+    border-color: #777;
+    cursor: not-allowed;
+    opacity: 0.6;
+    box-shadow: none;
+}
+
+.theme-desc {
+    margin-top: 15px;
+    font-size: 0.85rem;
+    color: var(--text-color);
+    text-align: center;
+    max-width: 90%;
+}
+
+#back-to-game-themes {
+    width: fit-content;
+    text-align: left;
+    margin: 20px auto;
+}
+
+.altmode-active #past-clues {
+    display: none !important;
+}
+
+.altmode-active .attempts-text {
+    font-size: 3rem !important;
+}
+
+body:not(.altmode-active) .attempts-text {
+    font-size: 1.5rem !important;
+}
+
+.altmode-active .attempts-fill {
+    stroke-dashoffset: 0 !important;
+    stroke: var(--gauge-high) !important;
+}
+
+/* 
+================================================================================
+    ANIMATIONS
+    (All @keyframes definitions)
+================================================================================
+*/
+
+@keyframes fadeInSlide {
+    from {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeOutSlide {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes dots {
+    0%   { content: ".";   }
+    33%  { content: "..";  }
+    66%  { content: "..."; }
+    100% { content: ".";   }
+}
+
+@keyframes galaxy-glow {
+    0%, 100% { color: #ff007f; }
+    25% { color: #7f00ff; }
+    50% { color: #00ffff; }
+    75% { color: #ffdf00; }
+}
+
+@keyframes galaxy-shift {
+    0%, 100% { background-color: #ff007f; }
+    25% { background-color: #7f00ff; }
+    50% { background-color: #00ffff; }
+    75% { background-color: #ffdf00; }
+}
+
+@keyframes sandbox-text {
+    0%   { transform: translateY(0px); }
+    50%  { transform: translateY(-4px); }
+    100% { transform: translateY(0px); }
+}
+
+@keyframes dreamer-bg {
+    0%   { background-position: 0% 0%; }
+    50%  { background-position: 100% 100%; }
+    100% { background-position: 0% 0%; }
+}
+
+@keyframes dreamer-sway {
+    0%   { transform: translateX(0px); }
+    33%  { transform: translateX(3px); }
+    66%  { transform: translateX(-3px); }
+    100% { transform: translateX(0px); }
+}
+
+@keyframes underwater-letters {
+    0%, 100% { color: #ffc26d; }
+    25% { color: #ff9b36; }
+    50% { color: #eaa133; }
+    75% { color: #eec40a; }
+}
+
+@keyframes underwater-drop {
+    0%, 100% { background-color: #ffc26d; }
+    25% { background-color: #ff9b36; }
+    50% { background-color: #eaa133; }
+    75% { background-color: #eec40a; }
+}
+
+@keyframes sprinkle-type {
+    0%, 100% { color: #ff5c8d; }
+    25% { color: #ff69b4; }
+    50% { color: #ff85a2; }
+    75% { color: #ff69b4; }
+}
+
+@keyframes sprinkle-bits {
+    0%, 100% { background-color: #ff5c8d; }
+    25% { background-color: #ff69b4; }
+    50% { background-color: #ff85a2; }
+    75% { background-color: #ff69b4; }
+}
+
+@keyframes verdant-text {
+    0%   { color: var(--accent-2); }
+    50%  { color: var(--accent-4); }
+    100% { color: var(--accent-2); }
+}
+
+@keyframes green-bg {
+    0%   { color: var(--accent-2); }
+    50%  { color: var(--accent-4); }
+    100% { color: var(--accent-2); }
+}
+
+@keyframes snow-effect {
+    0%, 100% { color: #606060; }
+    25% { color: #505050; }
+    50% { color: #606060; }
+    75% { color: #707070; }
+}
+
+@keyframes snow-day {
+    0%, 100% { background-color: #404040; }
+    25% { background-color: #303030; }
+    50% { background-color: #202020; }
+    75% { background-color: #303030; }
+}
+
+@keyframes terminal-glow {
+    0%, 100% { color: #33ff33; }
+    50% { color: #00ff00; }
+}
+
+@keyframes volcano-text {
+    0%   { color: var(--accent-1); }
+    25%  { color: var(--accent-2); }
+    50%  { color: var(--accent-3); }
+    75%  { color: var(--accent-4); }
+    100% { color: var(--accent-1); }
+}
+
+@keyframes volcano-bg {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes pool-text {
+    0% { color: gold; text-shadow: 0 0 5px rgba(255, 215, 0, 0.4); }
+    50% { color: #E0C97F; text-shadow: 0 0 10px rgba(224, 201, 127, 0.8); }
+    100% { color: gold; text-shadow: 0 0 5px rgba(255, 215, 0, 0.4); }
+}
+
+@keyframes pool-bg {
+    0% { background-color: #103020; }  
+    50% { background-color: #121212; } 
+    100% { background-color: #103020; } 
+}
+
+@keyframes neowave-bg {
+    0%, 100% { background-position: 0% 0%; }
+    50%      { background-position: 100% 100%; }
+}
+
+@keyframes neowave-button-shift {
+    0%   { transform: translate(0px, 0px) rotate(0deg); }
+    20%  { transform: translate(-2px, 3px) rotate(2deg); }
+    40%  { transform: translate(3px, -1px) rotate(-3deg); }
+    60%  { transform: translate(-3px, -3px) rotate(2deg); }
+    80%  { transform: translate(1px, 2px) rotate(-2deg); }
+    100% { transform: translate(0px, 0px) rotate(0deg); }
+}
+
+@keyframes flip-text {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes eclipse-text-fade {
+    0% {
+        text-shadow: 0px 0px 5px rgba(255, 200, 80, 0.3);
+        color: var(--accent-2);
+    }
+    50% {
+        text-shadow: 0px 0px -5px rgba(255, 200, 80, 0.8);
+        color: #fffd99;
+    }
+    100% {
+        text-shadow: 0px 0px 5px rgba(255, 200, 80, 0.3);
+        color: var(--accent-2);
+    }
+}
+
+@keyframes library-text {
+    0%, 
+    100% {
+      text-shadow: 0px 0px 4px rgba(85, 60, 40, 1);
+      color: var(--accent-2);
+    }
+    50% {
+      text-shadow: 0px 0px 12px rgba(65, 45, 25, 1);
+      color: var(--accent-2);
+    }
+  }
+  
+@keyframes library-bg {
+    0%, 
+    100% {
+      background-color: rgba(85, 60, 40, 0.8);
+    }
+    50% {
+      background-color: rgba(65, 45, 25, 0.8);
+    }
+}
+
+@keyframes luxury-text {
+    0%   { text-shadow: 0px 0px 5px rgba(255, 215, 0, 0.3); }
+    50%  { text-shadow: 0px 0px 12px rgba(255, 215, 0, 0.6); }
+    100% { text-shadow: 0px 0px 5px rgba(255, 215, 0, 0.3); }
+}
+
+@keyframes luxury-bg {
+    0%, 100% { background-position: 0% 0%; }
+    50%      { background-position: 50% 50%; }
+}
+
+/* 
+================================================================================
+    THEMES
+================================================================================
+*/
+
+/* -------------------- 1) :root (default) -------------------- */
+
+:root {
+    --bg-color: #121212;
+    --text-color: #E0E0E0;
+    --title-color: white;
+    --button-bg: linear-gradient(135deg, #9c27b0, #6a1b9a);
+    --button-hover-bg: linear-gradient(135deg, #6a1b9a, #9c27b0);
+    --disabled-button: #333;
+    --specialwords-animation: galaxy-text 6s linear infinite;
+    --special-bg: galaxy-shift 6s linear infinite;
+    --leaderboard-bg: #333;
+    --leaderboard-text: gold;
+    --rank: gold;
+    --score: #4CAF50;
+    --aiResponse: #404fc2;
+    --clue-bg: #222;
+    --clue-color: gold;
+    --input-bg: #1E1E1E;
+    --input-border: .5px solid #ffdd44;
+    --bbbg: #939393;
+    --ring-color: #4CAF50;
+    --ring-bg: #1a1a40;
+    --border-color: #ffffff;
+    --shadow-color: rgba(102, 75, 198, 0.4);
+    --accent-1: #8a2be2;
+    --accent-2: #ffdd44;
+    --alt-bg: #0d0d33;
+    --hover-bg: #3b2f5e;
+    --gauge-low: #E53935;
+    --gauge-mid: #FFEB3B;
+    --gauge-high: #4CAF50;
+    --winningBubble: linear-gradient(90deg, #FFD700, #FFC300, #FFD700);
+    --winningTextColor: #121212;
+}
+
+/* -------------------- 2) Galaxy -------------------- */
+
+body.theme-galaxy {
+    --bg-color: #121212;
+    --text-color: #E0E0E0;
+    --title-color: white;
+    --button-bg: linear-gradient(135deg, #9c27b0, #6a1b9a);
+    --button-hover-bg: linear-gradient(135deg, #6a1b9a, #9c27b0);
+    --disabled-button: #333;
+    --specialwords-animation: galaxy-glow 6s linear infinite;
+    --special-bg: galaxy-shift 6s linear infinite;
+    --leaderboard-bg: #222;
+    --leaderboard-text: gold;
+    --rank: gold;
+    --score: gold;
+    --aiResponse: #404fc2;
+    --clue-bg: #222;
+    --clue-color: gold;
+    --input-bg: #1E1E1E;
+    --input-border: .5px solid #ffdd44;
+    --bbbg: #939393;
+    --ring-color: #4CAF50;
+    --ring-bg: #1a1a40;
+    --border-color: #ffffff;
+    --shadow-color: rgba(102, 75, 198, 0.4);
+    --accent-1: #8a2be2;
+    --accent-2: #ffdd44;
+    --alt-bg: #0d0d33;
+    --hover-bg: #3b2f5e;
+    --gauge-low: #E53935;
+    --gauge-mid: #FFEB3B;
+    --gauge-high: #4CAF50;
+    --winningBubble: linear-gradient(90deg, #FFD700, #FFC300, #FFD700);
+    --winningTextColor: #121212;
+}
+
+/* -------------------- 3) Dreamer -------------------- */
+
+body.theme-dreamer {
+    --bg-color: linear-gradient(135deg, #5a3daa, #a555b9, #6ea8ff);
+    --text-color: #ffffff;
+    --title-color: #d3b4f7;
+    --button-bg: #bb86fc;
+    --button-hover-bg: #caa9ff;
+    --disabled-button: #7159a0;
+    --specialwords-animation: dreamer-sway 12s ease-in-out infinite;
+    --special-bg: dreamer-bg 20s ease-in-out infinite;
+    --leaderboard-bg: #9a66cc;
+    --leaderboard-text: #ffddff;
+    --rank: #ffccff;
+    --score: #a99aff;
+    --aiResponse: #7049d2;
+    --clue-bg: #cba6f7;
+    --clue-color: #ffffff;
+    --input-bg: #9a66cc;
+    --input-border: .5px solid #e2baff;
+    --bbbg: #e2baff;
+    --ring-color: rgb(137, 207, 240);
+    --ring-bg: #ad77ec;
+    --border-color: rgba(255, 255, 255, 0.2);
+    --shadow-color: rgba(200, 150, 255, 0.2);
+    --accent-1: #ffccff;
+    --accent-2: #cba6f7;
+    --accent-3: #89cff0;
+    --accent-4: #ffaaff;
+    --accent-5: #a6b9ff;
+    --alt-bg: #846fc3;
+    --hover-bg: #d3a8ff;
+    --gauge-low: #cba6f7;
+    --gauge-mid: #ffaaff;
+    --gauge-high: #89cff0;
+    --winningBubble: #ad77ec;
+    --winningTextColor: #e3cffa;
+}
+
+body.theme-dreamer::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        linear-gradient(135deg, rgba(90, 61, 170, 0.6), rgba(255, 179, 255, 0.6), rgba(110, 168, 255, 0.5)),
+        radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.2) 10%, rgba(0, 0, 0, 0) 50%),
+        radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.2) 10%, rgba(0, 0, 0, 0) 50%);
+    pointer-events: none;
+    z-index: -1;
+    animation: dreamer-bg 20s ease-in-out infinite;
+}
+
+/* -------------------- 4) Cupcake -------------------- */
+
+body.theme-cupcake {
+    --bg-color: linear-gradient(to bottom, #ffe4e1 0%, #fdd5d4 50%, #fdc6cf 100%);
+    --text-color: #5c2c06;
+    --button-bg: linear-gradient(135deg, #ff85a2, #ff5c8d);
+    --button-hover-bg: linear-gradient(135deg, #ff5c8d, #ff85a2);
+    --disabled-button: #a16e51;
+    --specialwords-animation: sprinkle-type 6s linear infinite;
+    --special-bg: sprinkle-bits 6s linear infinite;
+    --leaderboard-bg: #ffa3d1;
+    --leaderboard-text: #fffaeb;
+    --title-color: #ff4081;
+    --rank: #ff3b6c;
+    --score: #ffdde1;
+    --clue-color: #ff69b4;
+    --clue-bg: #ffdde1;
+    --aiResponse: #47200f;
+    --bbbg: #ffc1e0;
+    --input-bg: #ffe0ec;
+    --input-border: .5px solid #ff69b4;
+    --ring-color: #FF3B6C;
+    --ring-bg: #ffa3d1;
+    --border-color: #e75480;
+    --shadow-color: rgba(255, 120, 130, 0.4);
+    --accent-1: #ff85a2;
+    --accent-2: #ff5c8d;
+    --alt-bg: #ffdde1;
+    --hover-bg: #ff9eb5;
+    --gauge-low: #4E342E;
+    --gauge-mid: #a5636f;
+    --gauge-high: #FF3B6C;
+    --winningBubble: linear-gradient(to right, #ffe4e1 0%, #fdd5d4 50%, #fdc6cf 100%);
+    --winningTextColor: #FF3B6C;
+}
+
+body.theme-cupcake #submit-clue:disabled {
+    border: 1px solid #5a3e1b;
+}
+
+body.theme-cupcake #submit-clue:not(:disabled) {
+    color: #FF3B6C;
+}
+
+/* -------------------- 5) Verdant -------------------- */
+
+body.theme-verdant {
+    --bg-color: radial-gradient(circle at 50% 50%, rgba(60, 120, 60, 0.6) 10%, rgba(15, 40, 15, 1) 90%);
+    --text-color: #e5ffd9;
+    --title-color: #d4af37;
+    --button-bg: #2e7d32;
+    --button-hover-bg: #388e3c;
+    --disabled-button: #4d4d4d;
+    --specialwords-animation: verdant-text 10s linear infinite;
+    --special-bg: green-bg 12s linear infinite;
+    --leaderboard-bg: #38753a;
+    --leaderboard-text: #e5ffd9;
+    --rank: #d4af37;
+    --score: #8bc34a;
+    --aiResponse: #1b5e20;
+    --clue-bg: #2e7d32;
+    --clue-color: #e5ffd9;
+    --input-bg: #1b5e20;
+    --input-border: .5px solid #d4af37;
+    --bbbg: #33691e;
+    --ring-color: #d4af37;
+    --ring-bg: #1a3d1a;
+    --border-color: #d4af37;
+    --shadow-color: rgba(34, 85, 34, 0.4);
+    --accent-1: #8bc34a;
+    --accent-2: #2e7d32;
+    --accent-3: #1b5e20;
+    --accent-4: #4caf50;
+    --accent-5: #1b5e20;
+    --alt-bg: #102a10;
+    --hover-bg: #66bb6a;
+    --gauge-low: #4e342e;
+    --gauge-mid: #8bc34a;
+    --gauge-high: #d4af37;
+    --winningBubble: #8bc34a;
+    --winningTextColor: #102a10;
+}
+
+body.theme-verdant::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%, rgba(80, 160, 80, 0.4) 15%, rgba(20, 50, 20, 1) 90%),
+                radial-gradient(circle at 30% 70%, rgba(255, 255, 200, 0.2) 10%, rgba(0, 0, 0, 0) 50%),
+                radial-gradient(circle at 70% 30%, rgba(255, 255, 200, 0.2) 10%, rgba(0, 0, 0, 0) 50%),
+                linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 50, 0, 0.3));
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* -------------------- 6) Notepad -------------------- */
+
+body.theme-notepad {
+    --bg-color: #fffcf9;
+    --text-color: #222222;
+    --title-color: #222222;
+    --button-bg: #e8e8e8;
+    --button-hover-bg: #d0d0d0;
+    --disabled-button: #bbbbbb;
+    --specialwords-animation: none;
+    --special-bg: notepad-paper 0s linear infinite;
+    --leaderboard-bg: #fefaf5;
+    --leaderboard-text: #222222;
+    --rank: #222222;
+    --score: #222222;
+    --aiResponse: #999999;
+    --clue-bg: #faf4ed;
+    --clue-color: #222222;
+    --input-bg: #fffdfa;
+    --input-border: 1px solid #000000;
+    --bbbg: #666;
+    --ring-color: #888;
+    --ring-bg: #dddddd;
+    --border-color: #ddd;
+    --shadow-color: none;
+    --accent-1: #555555;
+    --accent-2: #dddddd;
+    --accent-3: #ff5555;
+    --accent-4: #5555ff;
+    --alt-bg: #dddddd;
+    --hover-bg: #ddd;
+    --gauge-low: #444;
+    --gauge-mid: #666;
+    --gauge-high: #888;
+    --winningBubble: var(--accent-2);
+    --winningTextColor: var(--accent-1);
+}
+
+body.theme-notepad::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        linear-gradient(to bottom,
+            transparent 10%,
+            var(--accent-4) 13.5%,
+            transparent 11%
+        ) repeat-y,
+        linear-gradient(to right,
+            var(--bg-color) 6.8%,
+            var(--accent-3) 7%,
+            transparent 7%
+        );
+    background-size: 100% 32px;
+    opacity: 1;
+    pointer-events: none;
+    z-index: -1;
+}
+
+body.theme-notepad h1,
+body.theme-notepad h2,
+body.theme-notepad h3,
+body.theme-notepad p,
+body.theme-notepad button {
+    font-family: "Courier New", Courier, monospace;
+}
+
+body.theme-notepad button {
+    font-size: 1rem;
+    font-weight: normal;
+    text-transform: none;
+    color: #222222;
+    background: #ffffff;
+    border: 2px solid #555555;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: transform 0.2sease-in-out, background 0.2sease-in-out;
+    box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.1), 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+body.theme-notepad .title {
+    letter-spacing: -7.5px;
+}
+
+body.theme-notepad .tagline, 
+body.theme-notepad .metric-label, 
+body.theme-notepad #result-message > p {
+    font-family: 'Trebuchet MS', Arial, Helvetica, sans-serif;
+}
+
+body.theme-notepad .theme-button.selected-theme {
+    box-shadow: 0px 0px 10px rgba(255, 80, 80, 0.8);
+    border: 2px solid rgba(255, 80, 80, 0.8);
+    color: rgba(255, 80, 80, 1);
+}
+
+body.theme-notepad .menu-title, 
+body.theme-notepad .leaderboard-title {
+    color: black;
+}
+
+body.theme-notepad .nav-button {
+    width: 60%;
+}
+
+body.theme-notepad .leaderboard-entry {
+    border: .75px solid var(--accent-4);
+}
+
+/* -------------------- 7) Terminal -------------------- */
+
+body.theme-terminal {
+    --bg-color: #000000;
+    --text-color: #33ff33;
+    --title-color: #00ff00;
+    --button-bg: linear-gradient(135deg, #003300, #005500);
+    --button-hover-bg: linear-gradient(135deg, #005500, #007700);
+    --disabled-button: #1a1a1a;
+    --specialwords-animation: terminal-glow 6s linear infinite;
+    --special-bg: terminal-flicker 6s linear infinite;
+    --leaderboard-bg: #101010;
+    --leaderboard-text: #33ff33;
+    --aiResponse: #003300;
+    --clue-bg: #002200;
+    --clue-color: #00ff00;
+    --input-bg: #000000;
+    --input-border: .5px solid #33ff33;
+    --bbbg: #001100;
+    --ring-color: #00ff00;
+    --ring-bg: #003300;
+    --border-color: #33ff33;
+    --shadow-color: rgba(0, 255, 0, 0.3);
+    --accent-1: #00ff00;
+    --accent-2: #008800;
+    --alt-bg: #001100;
+    --hover-bg: #004400;
+    --gauge-low: #006600;
+    --gauge-mid: #00aa00;
+    --gauge-high: #00ff00;
+    --winningBubble: linear-gradient(135deg, #005500, #007700);
+    --winningTextColor: #00ff00;
+}
+
+/* -------------------- 8) Fishbowl -------------------- */
+
+body.theme-fishbowl {
+    --bg-color: linear-gradient(to bottom, #87CEEB, #0077BE);
+    --text-color: #ffffff;
+    --title-color: white;
+    --button-bg: linear-gradient(135deg, #d74e03, #e18215);
+    --button-hover-bg: linear-gradient(135deg, #0096c7, #00b4d8);
+    --disabled-button: #333;
+    --specialwords-animation: underwater-letters 6s linear infinite;
+    --special-bg: underwater-drop 6s linear infinite;
+    --leaderboard-bg: #097a91;
+    --leaderboard-text: #4ed2d6;
+    --rank: gold;
+    --score: #e7890e;
+    --aiResponse: #005f73;
+    --clue-bg: #005f73;
+    --clue-color: gold;
+    --input-bg: #c5e8f7;
+    --input-border: .5px solid #ffdd44;
+    --bbbg: #005f73;
+    --ring-color: #FF8C00;
+    --ring-bg: #003f5c;
+    --border-color: #00b4d8;
+    --shadow-color: rgba(0, 180, 216, 0.3);
+    --accent-1: #ff7043;
+    --accent-2: #34d399;
+    --alt-bg: #005073;
+    --hover-bg: #0096c7;
+    --gauge-low: #003366;
+    --gauge-mid: #34d399;
+    --gauge-high: #FF8C00;
+    --winningBubble: linear-gradient(90deg, #fff09c, #ffdc6b, #ffe136);
+    --winningTextColor: #404fc2;
+}
+
+.theme-fishbowl #custom-word,
+.theme-fishbowl #custom-funfact {
+    background-color: var(--alt-bg);
+}
+
+/* -------------------- 9) Blizzard -------------------- */
+
+body.theme-blizzard {
+    --bg-color: linear-gradient(to bottom, #868686 0%, #676767 95%, #ffffff 96%, #ffffff 100%);
+    --text-color: #ffffff;
+    --button-bg: linear-gradient(135deg, #616161, #919191);
+    --button-hover-bg: linear-gradient(135deg, #919191, #616161);
+    --disabled-button: #333;
+    --specialwords-animation: snow-effect 6s linear infinite;
+    --special-bg: snow-day 6s linear infinite;
+    --leaderboard-bg: #2c2c2c;
+    --leaderboard-text: whitesmoke;
+    --rank: whitesmoke;
+    --score: whitesmoke;
+    --aiResponse: #a1a1a1;
+    --clue-bg: #4c4c4c;
+    --clue-color: rgb(200, 200, 200);
+    --input-bg: #4c4c4c;
+    --input-border: .5px solid #b0e0e6;
+    --bbbg: #4c4c4c;
+    --ring-color: #B0B0B0;
+    --ring-bg: #555;
+    --border-color: #b0e0e6;
+    --shadow-color: rgba(255, 255, 255, 0.147);
+    --accent-1: #b0e0e6;
+    --accent-2: #dcdcdc;
+    --alt-bg: #444;
+    --hover-bg: #7f7f7f;
+    --gauge-low: #2C2C2C;
+    --gauge-mid: #7e7e7e;
+    --gauge-high: #B0B0B0;
+    --winningBubble: linear-gradient(90deg, #7e7e7e, #8e8e8e, #9e9e9e);
+    --winningTextColor: #4c4c4c;
+}
+
+/* -------------------- 10) Volcano -------------------- */
+
+body.theme-volcano {
+    --bg-color: radial-gradient(circle, rgba(50, 15, 0, 0.6) 20%, rgba(20, 5, 0, 1) 80%);
+    --text-color: #ffcc99;
+    --title-color: #ff4500;
+    --button-bg: #a52a2a;
+    --button-hover-bg: #ff4500;
+    --disabled-button: #552000;
+    --specialwords-animation: volcano-text 10s linear infinite;
+    --special-bg: volcano-bg 12s linear infinite;
+    --leaderboard-bg: #331000;
+    --leaderboard-text: #ffbb33;
+    --rank: #ff4500;
+    --score: #ff6b00;
+    --aiResponse: #8b0000;
+    --clue-bg: #552000;
+    --clue-color: #ffcc99;
+    --input-bg: #331000;
+    --input-border: .5px solid #ff6b00;
+    --bbbg: #441100;
+    --ring-color: #ffbb33;
+    --ring-bg: #5a1e00;
+    --border-color: #ffbb33;
+    --shadow-color: transparent;
+    --accent-1: #ff4500;
+    --accent-2: #ffbb33;
+    --accent-3: #8b0000;
+    --accent-4: #552000;
+    --accent-5: #ff6b00;
+    --alt-bg: #220a00;
+    --hover-bg: #ff6b00;
+    --gauge-low: #8b0000;
+    --gauge-mid: #ff4500;
+    --gauge-high: #ffbb33;
+    --winningBubble: linear-gradient(to right, #ffbb33 20%, #ff6b00 80%);
+    --winningTextColor: #1e1e1e;
+}
+
+body.theme-volcano::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 69, 0, 0.3) 20%, rgba(0, 0, 0, 0.8) 120%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+body.theme-volcano button {
+    font-size: .85rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #ff4500;
+    background: #1e1e1e;
+    border: 3px solid #2e2e2e;
+    padding: 12px 14px;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out;
+    box-shadow: inset 0px 3px 6px rgba(0, 0, 0, 0.5),
+                2px 2px 8px rgba(30, 30, 30, 0.7);
+    background-image:
+        linear-gradient(135deg,
+            #252525 20%, transparent 21%,
+            #252525 22%, #1e1e1e 50%,
+            transparent 51%, #252525 52%);
+    background-size: 80px 80px;
+}
+
+body.theme-volcano button:hover {
+    color: #ffdd44;
+    background: #3a3a3a;
+    background-image:
+        linear-gradient(135deg,
+            transparent 20%, rgba(255, 69, 0, 0.6) 21%,
+            transparent 22%, transparent 50%,
+            rgba(255, 0, 0, 0.6) 51%, transparent 52%);
+    background-size: 80px 80px;
+}
+
+body.theme-volcano button:active {
+    transform: translateY(2px);
+    box-shadow:
+        inset 0px 2px 4px rgba(255, 140, 0, 0.7),
+        0px 0px 5px rgba(255, 69, 0, 0.8),
+        0px 0px 5px rgba(255, 0, 0, 1);
+}
+
+/* -------------------- 11) Sandbox -------------------- */
+
+body.theme-sandbox {
+    --bg-color: linear-gradient(to bottom, #87ceeb 30%, #ffcc66 100%);
+    --text-color: #5a3e1b;
+    --title-color: #e74c3c;
+    --button-bg: linear-gradient(to bottom, #ffcc00, #ff9900);
+    --button-hover-bg: linear-gradient(to bottom, #ff9900, #ff6600);
+    --disabled-button: #cccccc;
+    --specialwords-animation: sandbox-text 8s ease-in-out infinite;
+    --special-bg: sandbox-bg 12s ease-in-out infinite;
+    --leaderboard-bg: #0088cc;
+    --leaderboard-text: #ffcc66;
+    --rank: #ffcc66;
+    --score: #ffcc66;
+    --aiResponse: #e74c3c;
+    --clue-bg: #ffcc66;
+    --clue-color: #5a3e1b;
+    --input-bg: #ffdf99;
+    --input-border: .5px solid #0088cc;
+    --bbbg: #ffcc66;
+    --ring-color: #0088cc;
+    --ring-bg: #ffcc66;
+    --border-color: #ff9900;
+    --shadow-color: rgba(255, 153, 0, 0.4);
+    --accent-1: #ff4500;
+    --accent-2: #ffcc00;
+    --accent-3: #0088cc;
+    --accent-4: #e74c3c;
+    --accent-5: #ffcc66;
+    --alt-bg: #ffdf99;
+    --hover-bg: #ffa500;
+    --gauge-low: #ff6600;
+    --gauge-mid: #ffcc00;
+    --gauge-high: #0088cc;
+    --winningBubble: #0088cc;
+    --winningTextColor: #ffffff;
+}
+
+body.theme-sandbox::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(circle, rgba(255, 204, 102, 0.5) 20%, rgba(255, 204, 102, 0) 70%),
+        url('https://www.transparenttextures.com/patterns/sandpaper.png');
+    background-blend-mode: multiply;
+    opacity: 0.8;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.theme-sandbox .theme-button {
+    font-size: .85rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #5a3e1b;
+    background: linear-gradient(to bottom, #ffdf99, #ffcc66);
+    border: 2px solid #ff9900;
+    padding: 12px 24px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out;
+    box-shadow: inset 0px 2px 5px rgba(255, 255, 255, 0.3), 2px 2px 8px rgba(255, 153, 0, 0.4);
+}
+
+.theme-sandbox .theme-button:hover {
+    transform: translateY(-2px);
+    box-shadow: inset 0px 2px 5px rgba(255, 255, 255, 0.4), 4px 4px 12px rgba(255, 153, 0, 0.6);
+}
+
+.theme-sandbox .theme-button:active {
+    transform: translateY(2px);
+    box-shadow: inset 0px 3px 6px rgba(255, 255, 255, 0.5);
+}
+
+/* -------------------- 12) Billiards -------------------- */
+
+body.theme-billiards {
+    --bg-color: #175c47;  
+    --text-color: #F5EEC1;  
+    --title-color: gold;
+    --button-bg: linear-gradient(180deg, #5C3E1B, #3A2C1A);  
+    --button-hover-bg: linear-gradient(180deg, #7A4E2B, #5C3E1B);
+    --disabled-button: #2A1A12;
+    --specialwords-animation: pool-text 5s linear infinite;
+    --special-bg: pool-bg 8s linear infinite;
+    --leaderboard-bg: #3E2714;  
+    --leaderboard-text: gold;
+    --rank: gold;
+    --score: #F5EEC1;
+    --aiResponse: #4D2E1B;
+    --clue-bg: #2A1A12;
+    --clue-color: gold;
+    --input-bg: #1C6B38;
+    --input-border: 1px solid gold;
+    --bbbg: #2E2B28;
+    --ring-color: gold;
+    --ring-bg: #2E2B28;
+    --border-color: gold;
+    --shadow-color: rgba(255, 215, 0, 0.3);
+    --accent-1: #C49A6C;
+    --accent-2: #E0C97F;
+    --alt-bg: #4D2E1B;
+    --hover-bg: #7A4E2B;
+    --gauge-low: #D1A761;
+    --gauge-mid: #E0C97F;
+    --gauge-high: gold;
+    --winningBubble: linear-gradient(90deg, #000, #222, #000);
+    --winningTextColor: white;
+}
+
+body.theme-billiards::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://www.transparenttextures.com/patterns/black-felt.png'); 
+    opacity: 0.3;
+    pointer-events: none;
+    z-index: -1;
+}
+
+body.theme-billiards button {
+    border: 1px solid gold;
+    box-shadow: none;
+}
+
+body.theme-billiards .leaderboard-entry {
+    background: #4D2E1B;
+    color: gold;
+    border: .5px solid gold;
+}
+
+body.theme-billiards .game-container {
+    border-top: none;
+    border-bottom: none;
+}
+
+/* -------------------- 13) Neowave -------------------- */
+
+body.theme-neowave {
+    --bg-color: linear-gradient(135deg, #250d52, #4c128c, #ff44aa, #ff8844);
+    --text-color: #e8faff;
+    --title-color: #ff00ff;
+    --button-bg: #ff00ff;
+    --button-hover-bg: #ff66ff;
+    --disabled-button: #552088;
+    --specialwords-animation: none;
+    --special-bg: neowave-bg 10s linear infinite;
+    --leaderboard-bg: #170a38;
+    --leaderboard-text: #ff99ff;
+    --rank: #00ffff;
+    --score: #ff66ff;
+    --aiResponse: #330066;
+    --clue-bg: #7700ff;
+    --clue-color: #ffccff;
+    --input-bg: #330066;
+    --input-border: .5px solid #ffffff;
+    --bbbg: #220044;
+    --ring-color: #ffcc00;
+    --ring-bg: #220044;
+    --border-color: #00ffff;
+    --shadow-color: rgba(255, 0, 255, 0.3);
+    --accent-1: #ff00ff;
+    --accent-2: #00ffff;
+    --accent-3: #ff6600;
+    --accent-4: #ff66ff;
+    --accent-5: #220044;
+    --alt-bg: #170a38;
+    --hover-bg: #ff44aa;
+    --gauge-low: #ff0099;
+    --gauge-mid: #00ffff;
+    --gauge-high: #ffcc00;
+    --winningBubble: #ff00ff;
+    --winningTextColor: #e8faff;
+}
+
+.theme-neowave button {
+    position: relative;
+    font-size: .85rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #00ffff;
+    background: #ff00ff;
+    border: 2px solid #00ffff;
+    padding: 12px 24px;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    animation: neowave-button-shift 1.5s infinite ease-in-out alternate;
+}
+
+.theme-neowave button:hover {
+    animation: neowave-button-shift 0.8s infinite ease-in-out alternate;
+    box-shadow: 0px 0px 10px rgba(255, 0, 255, 0.8);
+}
+
+.theme-neowave button:active {
+    animation: none;
+    transform: translate(-3px, 3px) rotate(-5deg);
+}
+
+.theme-neowave .nav-button {
+    width: 65%;
+}
+
+.theme-neowave .flip-effect {
+    display: inline-block;
+    animation: flip-text 1.5s ease-in-out;
+}
+
+/* -------------------- 14) Eclipse -------------------- */
+
+body.theme-eclipse {
+    --bg-color: #050505;
+    --text-color: #e0e0e0;
+    --title-color: #ffcc66;
+    --accent-1: #ff9f1c;
+    --accent-2: #ffcc66;
+    --accent-3: #7a7a7a;
+    --accent-4: #222;
+    --button-bg: #111;
+    --button-hover-bg: linear-gradient(180deg, #222 0%, #000 100%);
+    --disabled-button: #555;
+    --specialwords-animation: eclipse-text-fade 6s linear infinite;
+    --special-bg: none;
+    --leaderboard-bg: #1a1a1a;
+    --leaderboard-text: var(--accent-2);
+    --rank: var(--accent-1);
+    --score: var(--accent-3);
+    --aiResponse: var(--bg-color);
+    --clue-bg: #111;
+    --clue-color: var(--accent-2);
+    --input-bg: #222;
+    --input-border: .5px solid #ffcc66;
+    --bbbg: #333;
+    --ring-color: var(--accent-1);
+    --ring-bg: #1a1a1a;
+    --border-color: #ffcc66;
+    --shadow-color: rgba(255, 204, 102, 0.2);
+    --alt-bg: #0d0d0d;
+    --hover-bg: #3b2f5e;
+    --gauge-low: var(--accent-3);
+    --gauge-mid: var(--accent-2);
+    --gauge-high: var(--accent-1);
+    --winningBubble: #050505;
+    --winningTextColor: var(--text-color);
+}
+
+body.theme-eclipse::before {
+    content: "";
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 95vh;
+    height: 95vh;
+    background: radial-gradient(circle, #050505, 1) 50%;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: -1;
+    box-shadow: 0 0 300px rgba(255, 200, 80, 1);
+}
+
+body.theme-eclipse button {
+    font-size: .85rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--accent-2);
+    background: #111;
+    border: none;
+    padding: 12px 24px;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out;
+    box-shadow: inset 0px 2px 3px rgba(255, 204, 102, 0.2), 0px 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+body.theme-eclipse .nav-button {
+    width: 60%;
+}
+
+body.theme-eclipse button:hover {
+    background: linear-gradient(180deg, #222 0%, #000 100%);
+    box-shadow: 0px 0px 10px rgba(255, 153, 0, 0.6), 0px 0px 30px rgba(255, 204, 102, 0.3);
+    transform: translateY(-2px);
+}
+
+body.theme-eclipse button:active {
+    transform: translateY(2px);
+    box-shadow: inset 0px 4px 8px rgba(255, 204, 102, 0.2), 0px 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+/* -------------------- 15) Library -------------------- */
+
+body.theme-library {
+    --bg-color: linear-gradient(to bottom, #40352b, #28221d);
+    --text-color: #e0c097;
+    --title-color: #d0b080;
+    --button-bg: linear-gradient(135deg, #7d5535, #a67c52);
+    --button-hover-bg: linear-gradient(135deg, #594436, #7d5c4f);
+    --specialwords: library-text 6s linear infinite;
+    --special-bg: library-bg 6s linear infinite;
+    --leaderboard-bg: #1e1814;
+    --leaderboard-text: #c7a17a;
+    --rank: #d4af37;
+    --score: #8c7851;
+    --aiResponse: #4a3c32;
+    --clue-bg: #362d26;
+    --clue-color: #f5deb3;
+    --input-bg: #3a3129;
+    --input-border: 0.5px solid #c7a17a;
+    --ring-color: #d4af37;
+    --ring-bg: #2a231c;
+    --border-color: #c7a17a;
+    --shadow-color: rgba(0,0,0,0.6);
+    --accent-1: #d4af37;
+    --accent-2: #8c7851;
+    --alt-bg: #2c241f;
+    --gauge-low: #1e1814;
+    --gauge-mid: var(--accent-2);
+    --gauge-high: var(--accent-1);
+    --winningBubble: linear-gradient(to right, #c7a17a, #8c7851);
+    --winningTextColor: #1e1814;
+}
+
+body.theme-library::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(circle, rgba(64,53,43,0.4) 20%, rgba(64,53,43,0) 70%),
+        url('../resources/bookshelf.jpg');
+    background-blend-mode: multiply; 
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    opacity: 0.2;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* -------------------- 16) Luxury -------------------- */
+
+body.theme-luxury {
+    --bg-color: #3d1a1a;
+    --text-color: #ffcc66;
+    --title-color: #ffd700;
+    --button-bg: linear-gradient(to bottom, #ffd700, #b8860b);
+    --button-hover-bg: linear-gradient(to bottom, #ffcc00, #996515);
+    --disabled-button: #5c2e2e;
+    --specialwords-animation: luxury-text 10s ease-in-out infinite;
+    --special-bg: luxury-bg 15s ease-in-out infinite;
+    --leaderboard-bg: #5e0505;
+    --leaderboard-text: #ffd700;
+    --rank: #ffcc66;
+    --score: #ffd700;
+    --aiResponse: #740e0e;
+    --clue-bg: #5c2e2e;
+    --clue-color: #ffd700;
+    --input-bg: #4a1430;
+    --bbbg: #5c2e2e;
+    --ring-color: #ffd700;
+    --ring-bg: #5c2e2e;
+    --border-color: #ffcc66;
+    --shadow-color: rgba(255, 215, 0, 0.3);
+    --accent-1: #ffd700;
+    --accent-2: #b8860b;
+    --accent-3: #69306d;
+    --accent-4: #5c2e2e;
+    --accent-5: #7a3b3b;
+    --alt-bg: #3d1a1a;
+    --hover-bg: #ffcc66;
+    --gauge-low: #5e0505;
+    --gauge-mid: #b8860b;
+    --gauge-high: #ffd700;
+    --winningBubble: linear-gradient(to bottom, #ffd700, #b8860b);
+    --winningTextColor: #000000;
+}
+
+body.theme-luxury::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        linear-gradient(180deg, rgba(61, 26, 26, 0.9), rgba(30, 10, 10, 1)),
+        url('https://www.transparenttextures.com/patterns/black-felt.png');
+    background-blend-mode: multiply;
+    opacity: 0.9;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.theme-luxury button {
+    font-size: .9rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #1a060f;
+    background: linear-gradient(180deg, #ffcc00, #ffd700, #b8860b) !important;
+    border: 3px solid #ffcc66;
+    padding: 7px 14px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out;
+    border-radius: 6px;
+    box-shadow:
+        inset 0px 4px 10px rgba(255, 255, 255, 0.3),
+        0px 4px 12px rgba(255, 215, 0, 0.4),
+        0px 6px 0px #b8860b;
+}
+
+.theme-luxury button:hover {
+    color: white;
+    transform: translateY(-2px);
+    box-shadow:
+        inset 0px 4px 12px rgba(255, 255, 255, 0.5),
+        0px 6px 14px rgba(255, 215, 0, 0.6),
+        0px 6px 0px #b8860b,
+        0px 10px 25px rgba(255, 215, 0, 0.8);
+}
+
+.theme-luxury button:active {
+    color: white;
+    transform: translateY(2px);
+    box-shadow:
+        inset 0px 6px 14px rgba(255, 255, 255, 0.6),
+        0px 2px 8px rgba(255, 215, 0, 0.4),
+        0px 3px 0px #b8860b;
+}
+
+.theme-luxury .theme-button.selected-theme {
+    background: linear-gradient(180deg, #d2d2d2, #b2b2b2, #8e8e8e) !important;
+    border: 3px solid #aaaaaa !important;
+    border-radius: 6px;
+    color: #4e4e4e !important;
+    cursor: pointer;          
+    pointer-events: auto;     
+    box-shadow:
+        inset 0px 4px 10px rgba(255, 255, 255, 0.3),
+        0px 4px 12px rgba(170, 170, 170, 0.4),
+        0px 6px 0px #8e8e8e;
+}
+
+.theme-luxury #submit-clue {
+    font-size: .9rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #1a060f;
+    background: linear-gradient(180deg, #ffcc00, #ffd700, #b8860b) !important;
+    border: 3px solid #ffcc66 !important;
+    padding: 7px 14px !important;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out;
+    border-radius: 6px;
+    box-shadow:
+        inset 0px 4px 10px rgba(255, 255, 255, 0.3),
+        0px 4px 12px rgba(255, 215, 0, 0.4),
+        0px 6px 0px #b8860b;
+}
+
+.theme-luxury #submit-clue:hover {
+    color: white;
+    transform: translateY(-2px);
+    box-shadow:
+        inset 0px 4px 12px rgba(255, 255, 255, 0.5),
+        0px 6px 14px rgba(255, 215, 0, 0.6),
+        0px 6px 0px #b8860b,
+        0px 10px 25px rgba(255, 215, 0, 0.8);
+}
+
+.theme-luxury #submit-clue:active {
+    color: white;
+    transform: translateY(2px);
+    box-shadow:
+        inset 0px 6px 14px rgba(255, 255, 255, 0.6),
+        0px 2px 8px rgba(255, 215, 0, 0.4),
+        0px 3px 0px #b8860b;
+}
+
+.theme-luxury #clue-input {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #1a060f;
+    background: linear-gradient(180deg, #ffcc00, #ffd700, #b8860b) !important;
+    border: 3px solid #ffcc66 !important;
+    border-radius: 6px;
+    padding: 8px 12px;
+    cursor: text;
+    transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out;
+    box-shadow:
+        inset 0px 4px 10px rgba(255, 255, 255, 0.3),
+        0px 4px 12px rgba(255, 215, 0, 0.4),
+        0px 6px 0px #b8860b;
+}
+
+.theme-luxury #clue-input:focus {
+    color: white;
+    transform: translateY(-2px);
+    box-shadow:
+        inset 0px 4px 12px rgba(255, 255, 255, 0.5),
+        0px 6px 14px rgba(255, 215, 0, 0.6),
+        0px 6px 0px #b8860b,
+        0px 10px 25px rgba(255, 215, 0, 0.8);
+}
+
+.theme-luxury #clue-input::placeholder {
+    color: #3d1a1a;
+    opacity: .75;
+}
+
+.theme-luxury #submit-clue:disabled {
+    background: linear-gradient(180deg, #d2d2d2, #b2b2b2, #8e8e8e) !important;
+    border: 3px solid #aaaaaa !important;
+    border-radius: 6px;
+    color: #4e4e4e !important;
+    box-shadow:
+        inset 0px 4px 10px rgba(255, 255, 255, 0.3),
+        0px 4px 12px rgba(170, 170, 170, 0.4),
+        0px 6px 0px #8e8e8e;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.theme-luxury #share-button {
+    color: #1E1E1E;
+}
+
+/* 
+================================================================================
+    ALL MEDIA QUERIES
+================================================================================
+*/
+
+/* -------------------- @media (max-width: 1350px) -------------------- */
+@media (max-width: 1350px) {
+    .achievement {
+        width: 250px;
+        padding: 8px;
+    }
+}
+
+/* -------------------- @media (max-width: 1100px) -------------------- */
+@media (max-width: 1100px) {
+    body {
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        height: 100%;
+    }
+
+    .game-card {
+        margin-bottom: 50px;
+    }
+
+    .game-header {
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    .title {
+        font-size: 2.5rem;
+    }
+
+    .tagline {
+        font-size: 1rem;
+    }
+
+    .menu-title {
+        display: none;
+    }
+
+    .left-sidebar {
+        padding-right: 0;
+        margin: 0;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .sidebar-buttons {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        width: 90%;
+        max-width: 350px;
+        margin: 0 auto;
+        padding: 10px 0;
+        gap: 8px;
+        background: none;
+        border-radius: 8px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    #menu-toggle:checked ~ .sidebar-buttons {
+        display: flex;
+    }
+
+    .menu-label {
+        display: block;
+        cursor: pointer;
+        text-align: center;
+        font-size: 1.8rem;
+        color: var(--text-color);
+        width: 50px;
+        user-select: none;
+        animation: var(--special-bg);
+        padding-bottom: 5px;
+        border-radius: 10px;
+    }
+
+    #menu-toggle {
+        display: none;
+    }
+
+    .nav-button {
+        width: 100%;
+        padding: 10px;
+        font-size: 0.9rem;
+        max-width: 300px;
+        margin-bottom: 0;
+    }
+
+    .row {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .game-container {
+        width: 95%;
+        max-width: 400px;
+        padding: 0 15px;
+        text-align: center;
+        padding-top: 20px;
+        padding-bottom: 15px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        border-top: solid 1px var(--text-color);
+        border-bottom: solid 1px var(--text-color);
+    }
+
+    .avatar {
+        width: 100px;
+        margin-bottom: 10px;
+    }
+
+    .clue-log {
+        width: 100%;
+        max-width: 95%;
+    }
+
+    .input-section {
+        width: 100%;
+        max-width: 400px;
+        padding: 10px;
+    }
+
+    .box {
+        flex-direction: row;
+        gap: 8px;
+        width: 100%;
+    }
+
+    #clue-input {
+        width: 65%;
+        font-size: 1rem;
+        padding: 10px;
+        border-radius: 8px;
+        margin-right: 0;
+    }
+
+    #submit-clue {
+        width: 35%;
+        font-size: 1rem;
+    }
+
+    .past-clues {
+        margin-bottom: 0;
+    }
+
+    .right-sidebar {
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+        margin-top: 0;
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .leaderboard-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    #leaderboard {
+        width: 90%;
+    }
+
+    .leaderboard-entry {
+        font-size: 1rem;
+        padding: 7px 8px 12px;
+    }
+
+    .how-to-play {
+        padding: 15px;
+        grid-template-columns: 1fr;
+        margin-bottom: 20px;
+    }
+
+    .how-to-play > *:nth-child(odd):not(button) {
+        text-align: left;
+        padding-bottom: 0;
+    }
+
+    .how-to-play > *:nth-child(even) {
+        background-color: var(--alt-bg, rgba(36, 36, 36, 0.9));
+    }
+
+    #how-to-play {
+        padding: 0;
+    }
+
+    #back-to-game {
+        margin: auto;
+    }
+
+    .metric-label {
+        font-size: .75rem;
+    }
+
+    #custom-word, #custom-funfact {
+        width: 300px;
+    }
+
+    .themes-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+    }
+      
+    .theme-box {
+        width: 100%;
+    }
+}
+
+/* -------------------- @media (max-width: 1150px) -------------------- */
+@media (max-width: 1150px) {
+    .achievements-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .achievement {
+        width: 170px;
+        height: 225px;
+        padding: 8px;
+    }
+}
+
+/* -------------------- @media (max-width: 800px) -------------------- */
+@media (max-width: 800px) {
+    .achievements-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* -------------------- @media (max-width: 600px) -------------------- */
+@media (max-width: 600px) {
+    #back-to-game-achievements {
+        width: 100%;
+        text-align: center;
+        display: block;
+        margin: 20px auto;
+    }
+
+    .themes-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+
+    .theme-box {
+        width: 100%;
+    }
+}
+
+/* -------------------- @media (max-width: 500px) -------------------- */
+@media (max-width: 600px) {
+    .achievement small {
+        font-size: 0.8rem;
+    }
+    .themes-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .achievements-grid {
+        grid-template-columns: repeat(2, 1fr);;
+    }
+
+    .achievement {
+        text-align: center;
+    }
+}
+
+/* -------------------- @media (prefers-reduced-motion) -------------------- */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+}
