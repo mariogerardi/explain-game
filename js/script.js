@@ -120,6 +120,8 @@ const confidenceLevel = document.querySelector('.confidence-level');
 const shareButton = document.getElementById("share-button");
 
 // TESTING
+
+// Unlocks all achievements and themes on localhost:8000.
 (function unlockForTesting() {
     if (window.location.origin === "http://localhost:8000") {
         console.log("Test mode: Unlocking all themes & achievements...");
@@ -143,6 +145,71 @@ const shareButton = document.getElementById("share-button");
         localStorage.setItem("achievements", JSON.stringify(achievements));
     }
 })();
+
+// Unlocks specific themes/achievements for a particular user
+
+// (function unlockForTesting() {
+//     const storedUsername = localStorage.getItem("username");
+//     
+//     if (storedUsername === "rbxa") {
+//         console.log("Unlocking select themes & achievements for rbxa...");
+// 
+//         // Load existing achievements or set default structure
+//         let storedAchievements = JSON.parse(localStorage.getItem("achievements")) || [];
+// 
+//         // Define all possible achievements to ensure missing ones are preserved
+//         const allAchievements = [
+//             { id: "dreamer", name: "Deep Thinker", description: "Submit 100 clues in any game mode", progress: 0, goal: 100, unlocked: false },
+//             { id: "cupcake", name: "Baker’s Dozen", description: "Win 13 Daily Challenges", progress: 0, goal: 13, unlocked: false },
+//             { id: "verdant", name: "Trailblazer", description: "Win 7 Daily Challenges in a row", progress: 2, goal: 7, unlocked: false },
+//             { id: "sandbox", name: "Free Play", description: "Win in Shuffle Mode 10 times", progress: 0, goal: 10, unlocked: false },
+//             { id: "terminal", name: "C:\\", description: "Win a Daily Challenge with a 3-character clue", progress: 0, goal: 1, unlocked: false },
+//             { id: "library", name: "Archivist", description: "Complete 10 puzzles from the archive", progress: 0, goal: 10, unlocked: false },
+//             { id: "luxury", name: "Hundredfold Prestige", description: "Win 100 Daily Challenges", progress: 0, goal: 100, unlocked: false },
+//             { id: "notepad", name: "Blank Page", description: "Win in Custom Mode 10 times", progress: 0, goal: 10, unlocked: false },
+//             { id: "fishbowl", name: "Crystal Clear", description: "Win the Daily Challenge with AI Confidence at 95% or higher", progress: 0, goal: 1, unlocked: false },
+//             { id: "blizzard", name: "Thin Ice", description: "Win the Daily Challenge with the AI confidence below 30%", progress: 0, goal: 1, unlocked: false },
+//             { id: "volcano", name: "Smoldering Precision", description: "Win a Daily Challenge with Search Space of 1", progress: 0, goal: 1, unlocked: false },
+//             { id: "billiards", name: "Corner Pocket", description: "Win the Daily Challenge on your last attempt", progress: 0, goal: 1, unlocked: false },
+//             { id: "neowave", name: "Last Call", description: "Win a Daily Challenge within 5 minutes of midnight", progress: 0, goal: 1, unlocked: false },
+//             { id: "eclipse", name: "Totality", description: "Win the Daily Challenge with AI Confidence and Search Space at the same value", progress: 0, goal: 1, unlocked: false },
+//         ];
+// 
+//         // List of achievements to unlock
+//         const achievementsToUnlock = ["dreamer", "cupcake", "verdant", "sandbox", "terminal", "library"];
+// 
+//         // Merge stored achievements with default ones, ensuring no achievements are lost
+//         let updatedAchievements = allAchievements.map(defaultAch => {
+//             let existingAch = storedAchievements.find(a => a.id === defaultAch.id) || {};
+//             let isUnlocking = achievementsToUnlock.includes(defaultAch.id);
+//             return {
+//                 ...defaultAch,
+//                 progress: existingAch.progress ?? defaultAch.progress,
+//                 unlocked: isUnlocking ? true : existingAch.unlocked ?? defaultAch.unlocked,
+//             };
+//         });
+// 
+//         // Ensure Baker’s Dozen and Hundredfold Prestige are at least 20 daily wins
+//         updatedAchievements = updatedAchievements.map(ach => {
+//             if (ach.id === "luxury") {
+//                 return { ...ach, progress: Math.max(ach.progress, 20), unlocked: ach.progress >= ach.goal };
+//             }
+//             return ach;
+//         });
+// 
+//         // Save the updated list back to localStorage
+//         localStorage.setItem("achievements", JSON.stringify(updatedAchievements));
+// 
+//         // Display a humorous message for rbxa
+//         alert(
+//             "Congrats, rbxa! Your achievements and themes are now unlocked. 🎉\n\n" +
+//             "However, next time, you might want to think twice before deleting your browser history. 🧐\n\n" +
+//             "It's all fun and games until you wipe out your progress and come running back to me for help. 😉"
+//         );
+// 
+//         console.log("✅ Select achievements unlocked for rbxa.");
+//     }
+// })();
 
 // GAME STATE MANAGEMENT
 // These functions handle game setup, resets, and overall game state.
